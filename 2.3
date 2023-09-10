@@ -1,0 +1,58 @@
+#include <iostream>
+#include <vector>
+
+void sortWithBitArray(std::vector<int>& numbers) {
+    const int MAX_VALUE = 1000000; // Максимальное значение числа (настройте под вашу задачу)
+
+    // Создаем и инициализируем битовый массив
+    std::vector<bool> bitArray(MAX_VALUE + 1, false);
+
+    // Устанавливаем соответствующие биты в массиве для каждого числа
+    for (int num : numbers) {
+        if (num >= 0 && num <= MAX_VALUE) {
+            bitArray[num] = true;
+        }
+    }
+
+    // Очищаем входной вектор перед записью отсортированных чисел
+    numbers.clear();
+
+    // Перебираем битовый массив и добавляем установленные биты (числа) в вектор
+    for (int i = 0; i <= MAX_VALUE; ++i) {
+        if (bitArray[i]) {
+            numbers.push_back(i);
+        }
+    }
+}
+
+int main() {
+    int n;
+    std::cout << "Введите количество чисел: ";
+    std::cin >> n;
+
+    if (n <= 0) {
+        std::cout << "Некорректное количество чисел. Пожалуйста, введите больше 0." << std::endl;
+        return 1;
+    }
+
+    std::vector<int> numbers(n);
+
+    std::cout << "Введите числа: ";
+    for (int i = 0; i < n; ++i) {
+        std::cin >> numbers[i];
+        if (numbers[i] < 0) {
+            std::cout << "Некорректное число. Пожалуйста, введите неотрицательное число." << std::endl;
+            return 1;
+        }
+    }
+
+    sortWithBitArray(numbers);
+
+    std::cout << "Отсортированные числа: ";
+    for (int num : numbers) {
+        std::cout << num << " ";
+    }
+    std::cout << std::endl;
+
+    return 0;
+}
