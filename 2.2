@@ -1,0 +1,43 @@
+#include <iostream>
+
+void sortWithBitArray(unsigned long long numbers[], int size) {
+    unsigned long long bitArray = 0;
+
+    for (int i = 0; i < size; ++i) {
+        bitArray |= (1ULL << numbers[i]);
+    }
+
+    std::cout << "Отсортированный набор чисел: ";
+    for (int i = 0; i <= 63; ++i) {
+        if ((bitArray & (1ULL << i)) != 0) {
+            std::cout << static_cast<int>(i) << " ";
+        }
+    }
+    std::cout << std::endl;
+}
+
+int main() {
+    int size;
+    std::cout << "Введите количество элементов (до 64): ";
+    std::cin >> size;
+
+    if (size > 64 || size <= 0) {
+        std::cout << "Некорректное количество элементов. Пожалуйста, введите до 64 и больше 0." << std::endl;
+        return 1;
+    }
+
+    unsigned long long numbers[64];
+
+    std::cout << "Введите числа (от 0 до 63): ";
+    for (int i = 0; i < size; ++i) {
+        std::cin >> numbers[i];
+        if (numbers[i] < 0 || numbers[i] > 63) {
+            std::cout << "Некорректное число. Пожалуйста, введите число от 0 до 63." << std::endl;
+            return 1;
+        }
+    }
+
+    sortWithBitArray(numbers, size);
+
+    return 0;
+}
