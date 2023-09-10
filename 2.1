@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+
+void sortWithBitArray(unsigned char numbers[], int size) {
+    unsigned char bitArray = 0;
+
+    for (int i = 0; i < size; ++i) {
+        bitArray |= (1 << numbers[i]);
+    }
+
+    std::cout << "Отсортированный набор чисел: ";
+    for (int i = 0; i <= 7; ++i) {
+        if ((bitArray & (1 << i)) != 0) {
+            std::cout << static_cast<int>(i) << " ";
+        }
+    }
+    std::cout << std::endl;
+}
+
+int main() {
+    int size;
+    std::cout << "Введите количество элементов (до 8): ";
+    std::cin >> size;
+
+    if (size > 8 || size <= 0) {
+        std::cout << "Некорректное количество элементов. Пожалуйста, введите до 8 и больше 0." << std::endl;
+        return 1;
+    }
+
+    std::vector<unsigned char> numbers;
+
+    std::cout << "Введите числа (от 0 до 7): ";
+    for (int i = 0; i < size; ++i) {
+        int num;
+        std::cin >> num;
+        if (num < 0 || num > 7) {
+            std::cout << "Некорректное число. Пожалуйста, введите число от 0 до 7." << std::endl;
+            return 1;
+        }
+        numbers.push_back(static_cast<unsigned char>(num));
+    }
+
+    sortWithBitArray(&numbers[0], size);
+
+    return 0;
+}
