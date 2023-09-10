@@ -1,0 +1,56 @@
+#include <iostream>
+#include <vector>
+#include <ctime>
+#include <algorithm>
+
+const int MAX_VALUE = 1000000; // Максимальное значение числа (настройте под вашу задачу)
+
+void sortWithBitArray(std::vector<int>& numbers) {
+    std::vector<bool> bitArray(MAX_VALUE + 1, false);
+
+    // Устанавливаем соответствующие биты в массиве
+    for (int num : numbers) {
+        if (num >= 0 && num <= MAX_VALUE) {
+            bitArray[num] = true;
+        }
+    }
+
+    // Очищаем вектор с числами
+    numbers.clear();
+
+    // Перебираем битовый массив и добавляем установленные биты (числа) в вектор
+    for (int i = 0; i <= MAX_VALUE; ++i) {
+        if (bitArray[i]) {
+            numbers.push_back(i);
+        }
+    }
+}
+
+int main() {
+    std::vector<int> numbers; // Вектор для хранения чисел
+
+    // Генерируем случайные числа и заполняем вектор
+    srand(static_cast<unsigned>(time(0)));
+    for (int i = 0; i < 1000000; ++i) {
+        numbers.push_back(rand() % (MAX_VALUE + 1));
+    }
+
+    // Оценим время выполнения
+    clock_t startTime = clock();
+    // Вызываем функцию для сортировки вектора с числами
+    sortWithBitArray(numbers);
+    clock_t endTime = clock();
+
+    double executionTime = static_cast<double>(endTime - startTime) / CLOCKS_PER_SEC;
+
+    std::cout << "Вектор успешно отсортирован за " << executionTime << " секунд." << std::endl;
+
+    // Выводим первые 10 отсортированных чисел
+    std::cout << "Первые 10 отсортированных чисел: ";
+    for (int i = 0; i < 10; ++i) {
+        std::cout << numbers[i] << " ";
+    }
+    std::cout << std::endl;
+
+    return 0;
+}
