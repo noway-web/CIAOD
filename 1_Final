@@ -1,0 +1,44 @@
+#include <iostream>
+#include <bitset>
+#include <vector>
+
+const int ARRAY_SIZE = 10000000 + 1; // Максимальное значение числа
+
+void countingSort(const std::vector<int>& inputNumbers) {
+    std::bitset<ARRAY_SIZE> bitset;
+
+    // Устанавливаем соответствующие биты для входных чисел в битовом массиве
+    for (int num : inputNumbers) {
+        if (num >= 0 && num < ARRAY_SIZE) {
+            bitset.set(num);
+        }
+    }
+
+    // Выводим упорядоченные числа в консоль
+    for (int i = 0; i < ARRAY_SIZE; ++i) {
+        if (bitset.test(i)) {
+            std::cout << i << "\n";
+        }
+    }
+}
+
+int main() {
+    std::vector<int> inputNumbers;
+    int num;
+
+    std::cout << "Введите числа (для завершения введите отрицательное число):\n";
+
+    // Ввод чисел
+    while (true) {
+        std::cin >> num;
+        if (num < 0 || num >= ARRAY_SIZE) {
+            break;
+        }
+        inputNumbers.push_back(num);
+    }
+
+    // Выполняем сортировку и выводим результат в консоль
+    countingSort(inputNumbers);
+
+    return 0;
+}
