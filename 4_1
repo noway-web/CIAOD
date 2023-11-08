@@ -41,6 +41,33 @@ Node* insert(Node* root, string key) {
     return root;
 }
 
+bool isNumber(const string& s) {
+    try {
+        stoi(s);
+        return true;
+    } catch (...) {
+        return false;
+    }
+}
+
+int countNumbers(Node* root) {
+    if (root == nullptr) {
+        return 0;
+    }
+
+    int leftNumbers = countNumbers(root->left);
+    int rightNumbers = countNumbers(root->right);
+
+    int currentNumbers = 0;
+
+    // Проверяем, является ли ключ числом
+    if (isNumber(root->key)) {
+        currentNumbers++;
+    }
+
+    return leftNumbers + rightNumbers + currentNumbers;
+}
+
 int main() {
     Node* root = nullptr;
     string input;
@@ -61,6 +88,9 @@ int main() {
 
     cout << "Дерево с корнем по центру и листьями вправо и вниз:" << endl;
     printTree(root, 0);
+
+    int numberCount = countNumbers(root);
+    cout << "Количество чисел в дереве: " << numberCount << endl;
 
     // Освобождение памяти после использования дерева
     // ...
